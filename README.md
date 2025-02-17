@@ -13,7 +13,7 @@ The housing market faces several critical issues:
 
 ## Solution Overview
 
-Thrive in the City addresses these challenges through an **AI-powered recommendation system** that provides personalised neighbourhood recommendations. The system employs advanced clustering algorithms to analyse and match user preferences with suitable areas, considering:
+Thrive in the City addresses these challenges through an **AI-powered recommendation system** that provides personalised neighbourhood guidance. The system employs advanced clustering algorithms to analyse and match user preferences with suitable areas, considering:
 
 - **Housing affordability metrics** (rents and house prices)
 - **Local amenities** (hospitals, schools, businesses)
@@ -45,6 +45,11 @@ The platform serves diverse user groups:
 The platform is fully operational and accessible at:
 🔗 [https://thriveinthecity.streamlit.app/](https://thriveinthecity.streamlit.app/)
 
+**How It Works**  
+1. **Set Your Criteria**: Move the sliders for crime tolerance, budget, or lifestyle priorities.  
+2. **View Recommended Clusters**: The interface updates the cluster assignments in real time.  
+3. **Explore Neighbourhood Insights**: Click on boroughs/districts for deeper data on schools, hospitals, and more.
+   
 ## Featured Technologies
 
 - **Backend Processing**: Python with Scikit-learn
@@ -138,7 +143,7 @@ The project processed multiple datasets covering **postcodes, crime rates, renta
 
 ### **3. Clustering & Model Performance**
 This section describes how the dataset was prepared for clustering and how two algorithms, **KMeans** and **DBSCAN**, were evaluated across two modelling phases.  
-For the complete details, refer to the **[notebooks](./notebooks/)** directory in this repository (for example, `Clustering_postcode_level.ipynb` and `Clustering_ward_level_Phase_2.ipynb`).
+For the complete details, refer to the **[notebooks](./notebooks/)** directory in this repository (`Clustering_postcode_level.ipynb` and `Clustering_ward_level_Phase_2.ipynb`).
 
 #### Pre-processing & Feature Scaling
 To ensure effective clustering:
@@ -171,13 +176,19 @@ Although *k=2* appeared optimal in certain metrics, it was **too coarse** to rep
 *Figure A: KMeans (Phase 1) Clusters*  
 ![KMeans Phase 1](./data/evaluation_images/Postcode_level_Phase_1/kmeans_visualisation_phase_1.png)
 
-The silhouette score was approximately 0.1061, showing moderate overlap and negative silhouette values for certain clusters.
-
-
 #### DBSCAN (Phase 1)
 
 - **Initial parameters** (eps=0.9, min_samples=5) produced **659 clusters plus noise**, leading to over-fragmentation.
 - Although DBSCAN can detect natural groupings without specifying *k*, it yielded impractical micro-clusters due to strict parameter settings.
+
+**Visual Example – DBSCAN (Phase 1)**  
+*Figure A: DBSCAN Phase 1 Clustering on Postcode-Level Data*  
+![DBSCAN Phase 1](./data/evaluation_images/Postcode_level_Phase_1/dbscan_visualisation.png)
+
+The figure shows numerous micro-clusters, making it impractical for user-friendly recommendations.  
+Observations included:
+- Highly fragmented clusters due to strict parameters (esp=0.9).
+- Excessive “noise” points, reflecting the sensitivity of DBSCAN to data density thresholds.
 
 > **Conclusion (Phase 1):** DBSCAN generated minimal actionable insights because of **excessive clustering**.
 
@@ -216,6 +227,16 @@ This version reduced overlap significantly, leading to a silhouette score of aro
 
 - Adjusted **eps=4** and **min_samples=5** led to **8 clusters plus 18 noise points**.
 - Proved more balanced than Phase 1 DBSCAN, but remained relatively granular and less intuitive for swift recommendations.
+
+**Visual Example – DBSCAN (Phase 2)**  
+*Figure B: DBSCAN Phase 2 Clustering on District-Level Data*  
+![DBSCAN Phase 2](./data/evaluation_images/Ward_level_Phase_2/dbscan_visualisation.png)
+
+Unlike the earlier over-fragmentation, Phase 2 DBSCAN shows a more coherent cluster structure with fewer noise points. This improvement stems from:
+- **District-level** data aggregation.
+- **RobustScaler** usage for better outlier handling.
+  
+Despite these advancements, DBSCAN remains less intuitive for quick recommendations than KMeans, due to its higher granularity.
 
 > **Key Insight:** DBSCAN at district level was more feasible but still less straightforward than KMeans for end-user scenarios.
 
@@ -262,17 +283,13 @@ The **Thrive in the City** web interface offers:
 - **Real-time clustering updates**, recalculating recommendations as weights change.
 - **Interactive visualisations**, highlighting borough- or district-level insights (schools, green spaces, crime stats, etc.).
 
-*Figure A: Example of the Streamlit interface displaying user filters and recommended neighbourhoods*  
-![UI Screenshot](./data/evaluation_images/UI.png)
-![UI Screenshot](./data/evaluation_images/UI_2.png)
+*Figure A: Example of the Streamlit main interface.*
+![UI Screenshot](./data/UI.png)
+
+*Figure B: Example displaying user filters and recommended neighbourhoods*  
+![UI Screenshot](./data/UI_2.png)
 
 > A live demo is accessible at: [Thrive in the City Streamlit App](https://thriveinthecity.streamlit.app/)  
-> (Or, link to a local version or video walkthrough if the app is not publicly hosted.)
-
-**How It Works**  
-1. **Set Your Criteria**: Move the sliders for crime tolerance, budget, or lifestyle priorities.  
-2. **View Recommended Clusters**: The interface updates the cluster assignments in real time.  
-3. **Explore Neighbourhood Insights**: Click on boroughs/districts for deeper data on schools, hospitals, and more.
 
 For further details on the UI logic and code, refer to the **[`app.py`](./app.py)** file in the repository.
 ## **Challenges & Future Improvements**
@@ -345,7 +362,7 @@ The following Python libraries are used throughout the project:
 
 # Project Structure
 
-The project is organized into several directories and files:
+The project is organised into several directories and files:
 
 - `app.py`: The main Streamlit application script that can be launched with the command.
 - `data/`: This directory contains all the data used in the project.
