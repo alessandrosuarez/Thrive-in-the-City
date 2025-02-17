@@ -40,8 +40,6 @@ The platform serves diverse user groups:
 - **Families** prioritising schools, safety, and green spaces.
 - **New London residents** needing insights on different boroughs and districts.
 
-[PLACEHOLDER: Add screenshot of platform interface]
-
 ## Current Development Status
 
 The platform is fully operational and accessible at:
@@ -171,7 +169,7 @@ Although *k=2* appeared optimal in certain metrics, it was **too coarse** to rep
 
 **Visual Example:**  
 *Figure A: KMeans (Phase 1) Clusters*  
-![KMeans Phase 1](./images/kmeans_phase1.png)
+![KMeans Phase 1](./data/evaluation_images/Postcode_level_Phase_1/kmeans_visualisation_phase_1.png)
 
 The silhouette score was approximately 0.1061, showing moderate overlap and negative silhouette values for certain clusters.
 
@@ -210,7 +208,7 @@ After examining these metrics in tandem with practical requirements, **k=5** was
 
 **Final KMeans Clustering**  
 *Figure B: KMeans (Phase 2, k=5) on District-Level Data*  
-![KMeans Phase 2](./images/kmeans_phase2.png)
+![KMeans Phase 2](./data/evaluation_images/Ward_level_Phase_2/kmeans_visualisation_phase_2.png)
 
 This version reduced overlap significantly, leading to a silhouette score of around 0.498 and more coherent cluster groupings.
 
@@ -244,6 +242,11 @@ This version reduced overlap significantly, leading to a silhouette score of aro
 
 > **Conclusion**: KMeans provided **actionable, user-friendly insights**, aligning with the goal of directing residents towards their ideal neighbourhoods.
 
+### Additional Visualisation
+*Figure B: KMeans Cluster Labels*  
+![KMeans Cluster Labels](./data/evaluation_images/Ward_level_Phase_2/kmeans_cluster_labels.png)
+
+This final image displays the **labelled clusters** produced by the model, offering a clear view of how different neighbourhoods group together under the selected preferences.
 
 **Further Details**  
 - For code and deeper analysis, see the **[notebooks folder](./notebooks/)** (for instance, `Clustering_postcode_level.ipynb` and `Clustering_ward_level_Phase_2.ipynb`).  
@@ -260,7 +263,8 @@ The **Thrive in the City** web interface offers:
 - **Interactive visualisations**, highlighting borough- or district-level insights (schools, green spaces, crime stats, etc.).
 
 *Figure A: Example of the Streamlit interface displaying user filters and recommended neighbourhoods*  
-![UI Screenshot](./images/thrive_in_the_city_ui.png)
+![UI Screenshot](./data/evaluation_images/UI.png)
+![UI Screenshot](./data/evaluation_images/UI_2.png)
 
 > A live demo is accessible at: [Thrive in the City Streamlit App](https://thriveinthecity.streamlit.app/)  
 > (Or, link to a local version or video walkthrough if the app is not publicly hosted.)
